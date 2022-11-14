@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useLoginMutation } from 'src/api/auth';
-import { ILogin } from 'src/types/api';
+import { ILogin } from 'src/types/global.type';
+import useLogin from 'src/utils/hooks/query/useLogin';
 
 const LoginForm = () => {
   const [account, setAccount] = useState<ILogin>({
@@ -14,7 +14,7 @@ const LoginForm = () => {
     setAccount((prev) => ({ ...prev, [name]: value }));
   };
 
-  const { mutate: login } = useLoginMutation();
+  const { mutate: login } = useLogin();
 
   const onSubmitLoginForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
