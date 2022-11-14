@@ -1,10 +1,9 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import React from 'react';
+import Login from 'src/view/auth/Login';
 
-const Home: NextPage = () => {
-  return <h1 className="bg-blue-500">Hello</h1>;
+const RootPage = () => {
+  // TODO: serverside나 page 관련 로직은 여기서 처리
+  return <Login />;
 };
 
-export default Home;
+export default RootPage;
