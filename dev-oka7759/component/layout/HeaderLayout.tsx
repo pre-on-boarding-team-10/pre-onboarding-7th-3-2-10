@@ -1,11 +1,11 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 const { Header } = Layout;
 interface LayoutProps {
   collapsed: boolean;
-  setCollapsed: () => void;
+  setCollapsed: Dispatch<SetStateAction<boolean>>;
 }
 
 const HeaderLayout = (props: LayoutProps) => {

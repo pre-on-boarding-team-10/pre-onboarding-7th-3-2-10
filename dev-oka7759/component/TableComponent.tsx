@@ -3,17 +3,20 @@ import type { ColumnsType, TableProps } from 'antd/es/table';
 import React from 'react';
 
 interface DataType {
-  key: number;
-  user_fullname: string;
-  user_name: string;
-  broker_name: string;
-  number: string;
-  status: string;
-  name: string;
   assets: string;
-  payments: string;
-  is_active: boolean;
+  broker_id: string;
   created_at: string;
+  id: number;
+  is_active: boolean;
+  key: number;
+  name: string;
+  number: string;
+  payments: string;
+  status: number;
+  updated_at: string;
+  user_fullname: string;
+  user_id: number;
+  uuid: string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -27,7 +30,7 @@ const columns: ColumnsType<DataType> = [
     title: '브로커명',
     dataIndex: 'broker_id',
     key: 'broker_id',
-    render: (text) => `${BROKERSDATA[Number(text)]}`,
+    render: (text) => `${BROKERSDATA[text]}`,
   },
   {
     title: '계좌번호',
@@ -81,16 +84,44 @@ const columns: ColumnsType<DataType> = [
 ];
 
 interface ListProps {
-  buckets: [];
-  userInfo: [];
+  buckets: {
+    id: number;
+    user_id: number;
+    uuid: string;
+    broker_id: string;
+    status: number;
+    number: string;
+    name: string;
+    assets: string;
+    payments: string;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+  }[];
+  userInfo: {
+    id: number;
+    uuid: string;
+    photo: string;
+    name: string;
+    email: string;
+    age: number;
+    gender_origin: number;
+    birth_date: string;
+    phone_number: string;
+    address: string;
+    detail_address: string;
+    last_login: string;
+    created_at: string;
+    updated_at: string;
+  }[];
 }
 
 const TableComponent = (props: ListProps): React.ReactElement => {
   const { buckets, userInfo } = props;
 
   const data: DataType[] = [];
-  buckets.forEach((item: {}, idxs: number) => {
-    userInfo.forEach((items: {}) => {
+  buckets.forEach((item, idxs: number) => {
+    userInfo.forEach((items) => {
       if (item.user_id === items.id) {
         data.push({ key: idxs, user_fullname: items.name, ...item });
       }
@@ -108,7 +139,7 @@ const TableComponent = (props: ListProps): React.ReactElement => {
 export default TableComponent;
 
 const STATUSDATA = { 관리자확인필요: 9999, 입금대기: 1, 운용중: 2, 투자중지: 3, 해지: 4 };
-const BROKERSDATA = {
+const BROKERSDATA: { [propsName: string]: string } = {
   '209': '유안타증권',
   '218': '현대증권',
   '230': '미래에셋증권',

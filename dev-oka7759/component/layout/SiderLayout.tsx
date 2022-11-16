@@ -26,9 +26,7 @@ const SiderLayout = (props: LayoutProps) => {
 
   const items: MenuItem[] = [
     getItem('대시보드', '1', <DashboardOutlined />),
-
     getItem('계좌 목록', 'sub1', <BankOutlined />, [getItem('투자계좌', '2', <LineChartOutlined />)]),
-
     getItem('사용자', '3', <UserOutlined />),
     getItem('로그아웃', '4', <LogoutOutlined />),
   ];
@@ -38,7 +36,15 @@ const SiderLayout = (props: LayoutProps) => {
       <Logo>
         <Image src={logo} layout="intrinsic" alt="logo" />
       </Logo>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} items={items} />
+      <Menu
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={['1']}
+        items={items}
+        onClick={(e) => {
+          console.log(e.key);
+        }}
+      />
     </Sider>
   );
 };
