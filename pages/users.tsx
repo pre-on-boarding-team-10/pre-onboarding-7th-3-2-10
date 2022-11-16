@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NextPageContext } from 'next';
-import { dehydrate, QueryClient } from 'react-query';
-import { UserService } from 'src/service/UserService';
-import UserList from 'src/view/admin/UserList.view';
 import cookie from 'cookie';
 import { IncomingMessage } from 'http';
+import { useSetRecoilState } from 'recoil';
 
-const UsersPage = () => {
+import UserList from 'src/view/admin/UserList.view';
+import { accessTokenAtom } from 'src/utils/atom/auth';
+
+interface IUsersPageProps {
+  accessToken: string;
+}
+
+const UsersPage = (props: IUsersPageProps) => {
+  const setAccessToken = useSetRecoilState(accessTokenAtom);
+
+  useEffect(() => {
+    setAccessToken(props.accessToken);
+  }, [props.accessToken]);
+
   return <UserList />;
 };
 
@@ -28,18 +39,23 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
 
   const accessToken = cookie.parse(headerCookie).accessToken;
 
-  const queryClient = new QueryClient();
-  const userService = new UserService(accessToken);
+  // const queryClient = new QueryClient();
+  // const userService = new UserService(accessToken);
 
-  await queryClient.prefetchQuery(['users'], () => userService.getUsers());
-  await queryClient.prefetchQuery(['users', 'setting'], () => userService.getUserSetting());
-  await queryClient.prefetchQuery(['users', 'accounts'], () => userService.getAccounts());
+  // console.log('userService.get', userService);
 
-  if (!dehydrate(queryClient)) return { props: {} };
+  // 상세정보 조회
+
+  // await queryClient.prefetchQuery(['users', 1], () => userService.getPaginateUsers(1));
+  // await queryClient.prefetchQuery(['users', 'setting'], () => userService.getUserSetting());
+  // await queryClient.prefetchQuery(['users', 'accounts'], () => userService.getAccounts());
+
+  // if (!dehydrate(queryClient)) return { props: {} };
 
   return {
     props: {
-      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+      // dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+      accessToken,
     },
   };
 };

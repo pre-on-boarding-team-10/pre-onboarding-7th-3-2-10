@@ -17,10 +17,12 @@ interface IAccount {
   updated_at: string;
 }
 
-const useGetAccounts = () => {
-  const userService = new UserService();
+const useGetAccounts = (accessToken: string) => {
+  const userService = new UserService(accessToken);
 
-  return useQuery<IAccount[], AxiosError>(['users', 'accounts'], userService.getAccounts);
+  return useQuery<AxiosResponse<IAccount[]>, AxiosError>(['users', 'accounts'], () => userService.getAccounts(), {
+    enabled: !!accessToken,
+  });
 };
 
 export default useGetAccounts;

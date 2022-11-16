@@ -13,10 +13,12 @@ interface IUserSetting {
   updated_at: string;
 }
 
-const useGetUserSetting = () => {
-  const userService = new UserService();
+const useGetUserSetting = (accessToken: string) => {
+  const userService = new UserService(accessToken);
 
-  return useQuery<IUserSetting[], AxiosError>(['users', 'setting'], userService.getUserSetting);
+  return useQuery<AxiosResponse<IUserSetting[]>, AxiosError>(['users', 'setting'], () => userService.getUserSetting(), {
+    enabled: !!accessToken,
+  });
 };
 
 export default useGetUserSetting;

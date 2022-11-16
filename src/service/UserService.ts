@@ -6,29 +6,34 @@ export class UserService extends AxiosBaseService {
   }
 
   async getUsers() {
-    const response = await this.api({
+    return await this.api({
       method: 'get',
       url: '/users',
     });
+  }
 
-    return response.data;
+  async getPaginatedUsers(page: number) {
+    return await this.api({
+      method: 'get',
+      url: '/users',
+      params: {
+        _page: page,
+        _limit: 10,
+      },
+    });
   }
 
   async getUserSetting() {
-    const response = await this.api({
+    return await this.api({
       method: 'get',
       url: '/userSetting',
     });
-
-    return response.data;
   }
 
   async getAccounts() {
-    const response = await this.api({
+    return await this.api({
       method: 'get',
       url: '/accounts',
     });
-
-    return response.data;
   }
 }

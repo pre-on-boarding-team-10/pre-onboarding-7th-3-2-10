@@ -33,4 +33,11 @@ export class AuthService extends AxiosBaseService {
       data,
     });
   }
+
+  logoutAtNextServer() {
+    return axios({
+      method: 'post',
+      url: '/api/logout',
+    });
+  }
 }
