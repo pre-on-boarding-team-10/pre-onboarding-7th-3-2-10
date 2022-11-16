@@ -1,6 +1,5 @@
-import { useLoginMutation } from 'src/utils/hooks/query/useLogin';
 import api from 'src/config/interceptor';
-import { ILogin } from 'src/utils/hooks/query/query.type';
+import { ILogin } from 'src/types/global.type';
 
 export class AuthService {
   register() {
