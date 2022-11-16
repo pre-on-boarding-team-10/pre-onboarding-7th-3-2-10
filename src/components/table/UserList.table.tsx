@@ -19,10 +19,10 @@ const UserListTable = () => {
 
   useEffect(() => {
     if (users && userSetting && accounts) {
-      const reduced = users.data.reduce((arr, cur) => {
-        const mySetting = userSetting.data.find((setting) => setting.uuid === cur.uuid);
-        const myAccounts = accounts.data.filter((account) => account.uuid === cur.uuid);
-        console.log('new Date(cur.created_at)', new Date(cur.created_at));
+      const reduced = users.reduce((arr, cur) => {
+        const mySetting = userSetting.find((setting) => setting.uuid === cur.uuid);
+        const myAccounts = accounts.filter((account) => account.uuid === cur.uuid);
+
         arr.push({
           ...cur,
           allow_marketing_push: mySetting?.allow_marketing_push ? '동의' : '비동의',

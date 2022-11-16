@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import { AuthService } from 'src/service/AuthService';
-import { LocalStorageService } from 'src/service/LocalStorageService';
+import { SessionStorageService } from 'src/service/SessionStorageService';
 import { ILogin } from 'src/types/global.type';
+import cookie from 'js-cookie';
 
 const useLogin = () => {
   const router = useRouter();
@@ -10,11 +11,9 @@ const useLogin = () => {
   return useMutation({
     mutationFn: (data: ILogin) => {
       const authService = new AuthService();
-      return authService.login(data);
+      return authService.loginAtNextServer(data);
     },
-    onSuccess: (response) => {
-      const localStorageService = new LocalStorageService();
-      localStorageService.set('accessToken', response.data.accessToken);
+    onSuccess: () => {
       router.push('/users');
     },
   });

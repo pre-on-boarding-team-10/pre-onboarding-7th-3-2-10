@@ -20,7 +20,7 @@ interface IAccount {
 const useGetAccounts = () => {
   const userService = new UserService();
 
-  return useQuery<AxiosResponse<IAccount[]>, AxiosError>(['users', 'accounts'], userService.getAccounts);
+  return useQuery<IAccount[], AxiosError>(['users', 'accounts'], userService.getAccounts);
 };
 
 export default useGetAccounts;

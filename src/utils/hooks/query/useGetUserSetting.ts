@@ -16,7 +16,7 @@ interface IUserSetting {
 const useGetUserSetting = () => {
   const userService = new UserService();
 
-  return useQuery<AxiosResponse<IUserSetting[]>, AxiosError>(['users', 'setting'], userService.getUserSetting);
+  return useQuery<IUserSetting[], AxiosError>(['users', 'setting'], userService.getUserSetting);
 };
 
 export default useGetUserSetting;

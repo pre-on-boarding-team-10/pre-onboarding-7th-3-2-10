@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
-import { LocalStorageService } from 'src/service/LocalStorageService';
+import { SessionStorageService } from 'src/service/SessionStorageService';
 
 const SideNav = () => {
-  const localStorageService = new LocalStorageService();
+  const sessionStorageService = new SessionStorageService();
   return (
     <aside className="bg-slate-900 fixed">
       <header className="text-white font-bold text-2xl px-8 py-4">PREFACE</header>
@@ -11,7 +11,7 @@ const SideNav = () => {
         <Link className="px-4 py-2 hover:text-white hover:bg-sky-500" href="/users">
           사용자
         </Link>
-        <Link className="px-4 py-2 hover:text-white hover:bg-sky-500" href="/" onClick={() => localStorageService.remove('accessToken')}>
+        <Link className="px-4 py-2 hover:text-white hover:bg-sky-500" href="/" onClick={() => sessionStorageService.remove('accessToken')}>
           로그아웃
         </Link>
       </nav>

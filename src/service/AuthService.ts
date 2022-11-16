@@ -1,9 +1,14 @@
-import api from 'src/config/interceptor';
+import axios from 'axios';
 import { ILogin } from 'src/types/global.type';
+import { AxiosBaseService } from './AxiosBaseService';
 
-export class AuthService {
+export class AuthService extends AxiosBaseService {
+  constructor() {
+    super('http://localhost:4000');
+  }
+
   register() {
-    return api({
+    return this.api({
       method: 'post',
       url: '/users/signup',
       data: {
@@ -13,10 +18,18 @@ export class AuthService {
     });
   }
 
-  login(data: ILogin) {
-    return api({
+  loginAtJSONServer(data: ILogin) {
+    return this.api({
       method: 'post',
       url: '/login',
+      data,
+    });
+  }
+
+  loginAtNextServer(data: ILogin) {
+    return axios({
+      method: 'post',
+      url: '/api/login',
       data,
     });
   }

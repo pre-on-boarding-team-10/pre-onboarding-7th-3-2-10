@@ -22,7 +22,7 @@ export interface IUser {
 const useGetUsers = () => {
   const userService = new UserService();
 
-  return useQuery<AxiosResponse<IUser[]>, AxiosError>(['users'], userService.getUsers);
+  return useQuery<IUser[], AxiosError>(['users'], userService.getUsers);
 };
 
 export default useGetUsers;
