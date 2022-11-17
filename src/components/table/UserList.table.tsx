@@ -34,7 +34,7 @@ const UserListTable = () => {
 
         arr.push({
           ...cur,
-          allow_marketing_push: mySetting?.allow_marketing_push ? '동의' : '비동의',
+          allow_marketing_push: mySetting?.allow_marketing_push ? 'O' : 'X',
           is_active: mySetting?.is_active ? '활성' : '비활성',
           account_count: myAccounts.length,
           birth_date: cur.birth_date && format(new Date(cur.birth_date), 'yyyy-MM-dd'),
@@ -67,7 +67,17 @@ const UserListTable = () => {
             return (
               <React.Fragment key={data.id}>
                 <div className="p-2">
-                  <Link href={`/users/${data.id}`}>{data.name}</Link>
+                  <Link
+                    href={{
+                      pathname: `/users/${data.id}`,
+                      query: {
+                        allow_marketing_push: data.allow_marketing_push,
+                        is_active: data.is_active,
+                      },
+                    }}
+                  >
+                    {data.name}
+                  </Link>
                 </div>
                 <div className="table-main-cell_p">{data.account_count}</div>
                 <div className="table-main-cell_p">{data.email}</div>
