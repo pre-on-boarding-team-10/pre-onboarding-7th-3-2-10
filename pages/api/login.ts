@@ -14,11 +14,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         cookie.serialize('accessToken', response.data.accessToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',
-          maxAge: 60 * 60,
+          maxAge: 1000 * 60 * 60 * 60,
           sameSite: 'strict',
           path: '/',
         }),
       );
+
       res.status(200).json({ success: true });
     } else {
       res.status(400).json({ failed: true });

@@ -2,7 +2,6 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useQueryClient } from 'react-query';
 import MainHeader from 'src/components/common/MainHeader';
 import SideNav from 'src/components/common/SideNav';
 import { AdminContentLayout, AdminMainLayout, AdminRootLayout } from 'src/components/layout/Admin.layout';

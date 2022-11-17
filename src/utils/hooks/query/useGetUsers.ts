@@ -1,12 +1,14 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { useQuery } from 'react-query';
 import { UserService } from 'src/service/UserService';
-import { IUser } from './useGetPaginatedUsers';
+import { IUser } from 'src/types/global.type';
 
 const useGetUsers = (accessToken: string) => {
   const userService = new UserService(accessToken);
 
-  return useQuery<AxiosResponse<IUser[]>, AxiosError>(['users'], () => userService.getUsers(), {
+  return useQuery<IUser[], AxiosError>({
+    queryKey: ['users'],
+    queryFn: () => userService.getUsers(),
     enabled: !!accessToken,
   });
 };

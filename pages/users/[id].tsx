@@ -46,6 +46,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   return {
     props: {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+      accessToken,
     },
   };
 };

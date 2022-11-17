@@ -10,7 +10,7 @@ const AdminMainLayout = ({ children }: IChildren) => {
 };
 
 const AdminContentLayout = ({ children }: IChildren) => {
-  return <section className="px-4 py-10">{children}</section>;
+  return <section className="px-4 py-10 flex flex-col gap-10">{children}</section>;
 };
 
 export { AdminRootLayout, AdminMainLayout, AdminContentLayout };

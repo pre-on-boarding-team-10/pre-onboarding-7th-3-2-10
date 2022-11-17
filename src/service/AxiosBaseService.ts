@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AuthService } from './AuthService';
 
 export abstract class AxiosBaseService {
   api: AxiosInstance;
@@ -12,6 +13,7 @@ export abstract class AxiosBaseService {
     });
     this.token = token;
     this.initializeRequestInterceptor();
+    this.initializeResponseInterceptor();
   }
 
   private initializeRequestInterceptor = () => {
@@ -21,5 +23,24 @@ export abstract class AxiosBaseService {
   private handleRequest = (config: AxiosRequestConfig) => {
     config.headers!['Authorization'] = `Bearer ${this.token}`;
     return config;
+  };
+
+  private initializeResponseInterceptor = () => {
+    this.api.interceptors.response.use(this.handleResponse, this.handleResponseError);
+  };
+
+  private handleResponse = (config: AxiosResponse) => {
+    return config;
+  };
+
+  private handleResponseError = (error: AxiosError) => {
+    const authService = new AuthService();
+
+    if (error.response?.status === 401) {
+      window.location.href = '/';
+      authService.logoutAtNextServer();
+      return;
+    }
+    return Promise.reject(error);
   };
 }

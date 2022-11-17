@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
 import useGetAccounts from 'src/utils/hooks/query/useGetAccounts';
-import useGetPaginatedUsers, { IUser } from 'src/utils/hooks/query/useGetPaginatedUsers';
+import useGetPaginatedUsers from 'src/utils/hooks/query/useGetPaginatedUsers';
 import useGetUserSetting from 'src/utils/hooks/query/useGetUserSetting';
 import useGetAccessToken from 'src/utils/hooks/useGetAccessToken';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { IAccount, ISearchValueState, IUser, IUserSetting } from 'src/types/global.type';
+import useDeleteUser from 'src/utils/hooks/query/useDeleteUser';
+import PaginationBar from '../Bar/Pagination.bar';
+import SearchFilterBar from '../Bar/SearchFilter.bar';
+import ThemeOfDarkTableTemplate from './ThemeOfDark.template';
 
 interface ITableData extends IUser {
   allow_marketing_push: boolean;
@@ -14,25 +19,110 @@ interface ITableData extends IUser {
   account_count: number;
 }
 
-const MAX_PAGE = 11;
+interface IUserListTableProps {
+  currentPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+}
 
-const UserListTable = () => {
+const UserListTable = (props: IUserListTableProps) => {
+  const { currentPage, setCurrentPage } = props;
+
   const router = useRouter();
   const query = router.query;
-  const [currentPage, setCurrentPage] = useState<number>(query.page ? Number(query.page) : 1);
-  const accessToken = useGetAccessToken();
+  const initialSearchValue = typeof query.q === 'string' ? query.q : '';
 
-  const { data: paginatedUsers, isPreviousData } = useGetPaginatedUsers(currentPage, accessToken);
+  const [searchValue, setSearchValue] = useState<ISearchValueState>({
+    changed: initialSearchValue,
+    submitted: initialSearchValue,
+  });
+
+  const accessToken = useGetAccessToken();
+  const { data: paginatedUsers, isPreviousData } = useGetPaginatedUsers(currentPage, accessToken, searchValue.submitted);
   const { data: userSetting } = useGetUserSetting(accessToken);
   const { data: accounts } = useGetAccounts(accessToken);
 
-  const [tableData, setTableData] = useState<ITableData[]>([]);
+  const { mutate: deleteUser } = useDeleteUser(accessToken, currentPage);
+
+  if (!paginatedUsers || !userSetting || !accounts) return <></>;
+
+  return (
+    <section className="flex flex-col gap-4">
+      <div className="overflow-x-auto relative">
+        <SearchFilterBar searchValue={searchValue} setSearchValue={setSearchValue} setCurrentPage={setCurrentPage} />
+        <ThemeOfDarkTableTemplate
+          renderTableHeader={<TableHeader />}
+          renderTableBody={<TableBody paginatedUsers={paginatedUsers} userSetting={userSetting} accounts={accounts} deleteUser={deleteUser} />}
+        />
+      </div>
+      <PaginationBar currentPage={currentPage} setCurrentPage={setCurrentPage} isPreviousData={isPreviousData} />
+    </section>
+  );
+};
+
+export default UserListTable;
+
+// Components
+const TableHeader = () => {
+  return (
+    <tr>
+      <th scope="col" className="p-2">
+        고객명
+      </th>
+      <th scope="col" className="p-2 w-14">
+        계좌수
+      </th>
+      <th scope="col" className="p-2">
+        이메일
+      </th>
+      <th scope="col" className="p-2 w-20">
+        성별 코드
+      </th>
+      <th scope="col" className="p-2">
+        생년월일
+      </th>
+      <th scope="col" className="p-2 w-20">
+        휴대폰 번호
+      </th>
+      <th scope="col" className="p-2">
+        최근 로그인
+      </th>
+      <th scope="col" className="p-2 w-20">
+        수신 동의
+      </th>
+      <th scope="col" className="p-2 w-24">
+        활성화 여부
+      </th>
+      <th scope="col" className="p-2">
+        가입일
+      </th>
+      <th scope="col" className="p-2 w-12">
+        수정
+      </th>
+      <th scope="col" className="p-2 w-12">
+        삭제
+      </th>
+    </tr>
+  );
+};
+
+interface ITableBodyProps {
+  paginatedUsers: IUser[];
+  userSetting: IUserSetting[];
+  accounts: IAccount[];
+  deleteUser: any;
+}
+
+const TableBody = (props: ITableBodyProps) => {
+  const { paginatedUsers, userSetting, accounts, deleteUser } = props;
+
+  const router = useRouter();
+  const [tableRowsData, setTableRowsData] = useState<ITableData[]>([]);
 
   useEffect(() => {
     if (paginatedUsers && userSetting && accounts) {
-      const reduced = paginatedUsers.data.reduce((arr, cur) => {
-        const mySetting = userSetting.data.find((setting) => setting.uuid === cur.uuid);
-        const myAccounts = accounts.data.filter((account) => account.uuid === cur.uuid);
+      const reduced = paginatedUsers.reduce((arr, cur) => {
+        const mySetting = userSetting.find((setting) => setting.uuid === cur.uuid);
+        const myAccounts = accounts.filter((account) => account.uuid === cur.uuid);
 
         arr.push({
           ...cur,
@@ -45,93 +135,48 @@ const UserListTable = () => {
         return arr;
       }, [] as any[]);
 
-      setTableData(reduced);
+      setTableRowsData(reduced);
     }
   }, [paginatedUsers, userSetting, accounts]);
 
   return (
-    <article className="flex flex-col gap-4">
-      <section className="border border-gray-300 min-h-[353.86px]">
-        <header className="grid grid-cols-10 items-center text-xs  font-medium bg-gray-50 border-b-[1px]">
-          <h1 className="table-cell_exist_border">고객명</h1>
-          <h1 className="table-cell_exist_border">보유중인 계좌수</h1>
-          <h1 className="table-cell_exist_border">이메일 주소</h1>
-          <h1 className="table-cell_exist_border">주민등록상 성별 코드</h1>
-          <h1 className="table-cell_exist_border">생년월일</h1>
-          <h1 className="table-cell_exist_border">휴대폰 번호</h1>
-          <h1 className="table-cell_exist_border">최근 로그인</h1>
-          <h1 className="table-cell_exist_border">혜택 수신 동의 여부</h1>
-          <h1 className="table-cell_exist_border">활성화 여부</h1>
-          <h1 className="table-cell_none_border">가입일</h1>
-        </header>
-        <section className="grid grid-cols-10 text-xs bg-white">
-          {tableData.map((data) => {
-            return (
-              <React.Fragment key={data.id}>
-                <div className="p-2">
-                  <Link
-                    href={{
-                      pathname: `/users/${data.id}`,
-                      query: {
-                        allow_marketing_push: data.allow_marketing_push,
-                        is_active: data.is_active,
-                      },
-                    }}
-                  >
-                    {data.name}
-                  </Link>
-                </div>
-                <div className="table-main-cell_p">{data.account_count}</div>
-                <div className="table-main-cell_p">{data.email}</div>
-                <div className="table-main-cell_p">{data.gender_origin}</div>
-                <div className="table-main-cell_p">{data.birth_date}</div>
-                <div className="table-main-cell_p">{data.phone_number}</div>
-                <div className="table-main-cell_p">{data.last_login}</div>
-                <div className="table-main-cell_p">{data.allow_marketing_push}</div>
-                <div className="table-main-cell_p">{data.is_active}</div>
-                <div className="table-main-cell_p">{data.created_at}</div>
-              </React.Fragment>
-            );
-          })}
-        </section>
-      </section>
-      <div className="flex gap-4 justify-center">
-        <Link
-          href={{
-            pathname: router.pathname,
-            query: {
-              ...query,
-              page: Math.max(currentPage - 1, 0),
-            },
-          }}
-          className={`text-sm ${currentPage === 1 && 'opacity-30 pointer-events-none'}`}
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
-          passHref
-          shallow
-          replace
-        >
-          {`<`}
-        </Link>
-        <span className="text-sm">{currentPage}</span>
-        <Link
-          href={{
-            pathname: router.pathname,
-            query: {
-              ...query,
-              page: currentPage + 1,
-            },
-          }}
-          className={`text-sm ${(isPreviousData || currentPage >= MAX_PAGE) && 'opacity-30 pointer-events-none'}`}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-          passHref
-          shallow
-          replace
-        >
-          {`>`}
-        </Link>
-      </div>
-    </article>
+    <React.Fragment>
+      {tableRowsData.map((row, rowIdx) => (
+        <tr key={`${row.id}-${rowIdx}`} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <th scope="row" className="p-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <Link href={{ pathname: `/users/${row.id}` }}>{row.name}</Link>
+          </th>
+          <td className="py-2 px-4">{row.account_count}</td>
+          <td className="py-2 px-4">{row.email}</td>
+          <td className="py-2 px-4">{row.gender_origin}</td>
+          <td className="py-2 px-4">{row.birth_date}</td>
+          <td className="py-2 px-4">{row.phone_number}</td>
+          <td className="py-2 px-4">{row.last_login}</td>
+          <td className="py-2 px-4">{row.allow_marketing_push}</td>
+          <td className="py-2 px-4">{row.is_active}</td>
+          <td className="py-2 px-4">{row.created_at}</td>
+          <td className="w-12">
+            <Link
+              href={{ pathname: `/users/${row.id}`, query: { ...router.query, state: 'editting' } }}
+              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            >
+              Edit
+            </Link>
+          </td>
+          <td className="w-12">
+            <Link
+              href={{ pathname: router.pathname }}
+              className="font-medium text-red-500 dark:text-red-500 hover:underline"
+              passHref
+              shallow
+              replace
+              onClick={() => deleteUser(row.id)}
+            >
+              Delete
+            </Link>
+          </td>
+        </tr>
+      ))}
+    </React.Fragment>
   );
 };
-
-export default UserListTable;
