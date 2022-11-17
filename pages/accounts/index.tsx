@@ -1,28 +1,27 @@
-import React, { useEffect } from 'react';
-import { NextPageContext } from 'next';
-import cookie from 'cookie';
 import { IncomingMessage } from 'http';
+import { NextPageContext } from 'next';
+import React, { useEffect } from 'react';
+import cookie from 'cookie';
 import { useSetRecoilState } from 'recoil';
 
-import UserListView from 'src/view/admin/UserList.view';
-import { accessTokenAtom } from 'src/utils/atom/auth';
 import { IPageProps } from 'src/types/global.type';
+import AccountListView from 'src/view/admin/AccountList.view';
+import { accessTokenAtom } from 'src/utils/atom/auth';
 
-const UsersPage = (props: IPageProps) => {
+const AccountsPage = (props: IPageProps) => {
   const setAccessToken = useSetRecoilState(accessTokenAtom);
 
   useEffect(() => {
     setAccessToken(props.accessToken);
   }, [props.accessToken]);
 
-  return <UserListView />;
+  return <AccountListView />;
 };
 
-export default UsersPage;
+export default AccountsPage;
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   if (!ctx.req) return { props: {} };
-
   const req: IncomingMessage = ctx.req;
   const headerCookie = req.headers.cookie;
 

@@ -14,13 +14,15 @@ interface ITableData extends IUser {
   account_count: number;
 }
 
+const MAX_PAGE = 11;
+
 const UserListTable = () => {
   const router = useRouter();
   const query = router.query;
-  const [pageState, setPageState] = useState<number>(query.page ? Number(query.page) : 1);
+  const [currentPage, setCurrentPage] = useState<number>(query.page ? Number(query.page) : 1);
   const accessToken = useGetAccessToken();
 
-  const { data: paginatedUsers, isPreviousData } = useGetPaginatedUsers(pageState, accessToken);
+  const { data: paginatedUsers, isPreviousData } = useGetPaginatedUsers(currentPage, accessToken);
   const { data: userSetting } = useGetUserSetting(accessToken);
   const { data: accounts } = useGetAccounts(accessToken);
 
@@ -99,28 +101,28 @@ const UserListTable = () => {
             pathname: router.pathname,
             query: {
               ...query,
-              page: Math.max(pageState - 1, 0),
+              page: Math.max(currentPage - 1, 0),
             },
           }}
-          className={`text-sm ${pageState === 1 && 'disabled:opacity-30'}`}
-          onClick={() => setPageState((prev) => Math.max(prev - 1, 0))}
+          className={`text-sm ${currentPage === 1 && 'opacity-30 pointer-events-none'}`}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           passHref
           shallow
           replace
         >
           {`<`}
         </Link>
-        <span className="text-sm">{pageState}</span>
+        <span className="text-sm">{currentPage}</span>
         <Link
           href={{
             pathname: router.pathname,
             query: {
               ...query,
-              page: pageState + 1,
+              page: currentPage + 1,
             },
           }}
-          className={`text-sm ${(isPreviousData || !paginatedUsers?.hasNextPage) && 'disabled:opacity-30'}`}
-          onClick={() => setPageState((prev) => prev + 1)}
+          className={`text-sm ${(isPreviousData || currentPage >= MAX_PAGE) && 'opacity-30 pointer-events-none'}`}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
           passHref
           shallow
           replace

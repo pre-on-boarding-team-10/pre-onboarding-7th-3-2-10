@@ -44,4 +44,16 @@ export class UserService extends AxiosBaseService {
       url: '/accounts',
     });
   }
+
+  async getPaginatedAccounts(page: number) {
+    const response = await this.api({
+      method: 'get',
+      url: '/accounts',
+      params: {
+        _page: page,
+        _limit: 10,
+      },
+    });
+    return response.data;
+  }
 }

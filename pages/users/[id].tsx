@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import UserDetailView from 'src/view/admin/UserDetail.view';
 import { useSetRecoilState } from 'recoil';
 import { accessTokenAtom } from 'src/utils/atom/auth';
-import { IUsersPageProps } from 'src/types/global.type';
 import { NextPageContext } from 'next';
 import { IncomingMessage } from 'http';
 import cookie from 'cookie';
 import { dehydrate, QueryClient } from 'react-query';
 import { UserService } from 'src/service/UserService';
+import { IPageProps } from 'src/types/global.type';
 
-const UserPage = (props: IUsersPageProps) => {
+const UserPage = (props: IPageProps) => {
   const setAccessToken = useSetRecoilState(accessTokenAtom);
 
   useEffect(() => {
