@@ -16,6 +16,8 @@ const useUpdateUser = (accessToken: string, page: number) => {
       router.push({
         pathname: '/users',
         query: {
+          q: router.query.q || '',
+          searching: !!router.query.searching,
           page,
         },
       });

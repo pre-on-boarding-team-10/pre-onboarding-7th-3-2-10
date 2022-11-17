@@ -71,21 +71,12 @@ export class UserService extends AxiosBaseService {
    *
    * parameter user_id: id
    */
-  async getAccounts() {
-    const response = await this.api({
-      method: 'get',
-      url: '/accounts',
-    });
-    return response.data;
-  }
-
-  async getPaginatedAccounts(page: number) {
+  async getAccounts(id?: number) {
     const response = await this.api({
       method: 'get',
       url: '/accounts',
       params: {
-        _page: page,
-        _limit: 10,
+        user_id: id,
       },
     });
     return response.data;

@@ -27,35 +27,11 @@ body {
   }
 
   .title-main {
-    @apply font-bold text-lg pb-4;
+    @apply font-bold text-lg;
   }
 
   .table-align_center {
     @apply flex justify-center items-center;
-  }
-
-  .table-cell-title_border_br {
-    @apply border-b-[1px] border-r-[1px] border-gray-300 bg-neutral-100 table-align_center py-5;
-  }
-
-  .table-cell_border_br {
-    @apply border-b-[1px] border-r-[1px] border-gray-300 bg-white table-align_center py-5;
-  }
-
-  .table-cell-title_border_r {
-    @apply border-r-[1px] border-gray-300 bg-neutral-100 table-align_center py-5;
-  }
-
-  .table-cell_border_r {
-    @apply border-r-[1px] border-gray-300 bg-white table-align_center py-5;
-  }
-
-  .table-cell-title_border_b {
-    @apply border-b-[1px] border-gray-300 bg-neutral-100 table-align_center py-5;
-  }
-
-  .table-cell_border_b {
-    @apply border-b-[1px] border-gray-300 bg-white table-align_center;
   }
 
   .prev_pagination_btn {
@@ -68,5 +44,17 @@ body {
 
   .num_pagination_btn {
     @apply px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 cursor-default;
+  }
+
+  .dark_table_tr {
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700;
+  }
+
+  .dark_table_narrow_th {
+    @apply p-3 font-medium text-gray-900 whitespace-nowrap dark:text-white;
+  }
+
+  .dark_table_wide_th {
+    @apply p-8 font-medium text-gray-900 dark:bg-gray-700 whitespace-nowrap dark:text-white;
   }
 }

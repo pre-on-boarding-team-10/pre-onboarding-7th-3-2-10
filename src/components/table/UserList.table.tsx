@@ -142,9 +142,9 @@ const TableBody = (props: ITableBodyProps) => {
   return (
     <React.Fragment>
       {tableRowsData.map((row, rowIdx) => (
-        <tr key={`${row.id}-${rowIdx}`} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <th scope="row" className="p-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <Link href={{ pathname: `/users/${row.id}` }}>{row.name}</Link>
+        <tr key={`${row.id}-${rowIdx}`} className="dark_table_tr">
+          <th scope="row" className="dark_table_narrow_th">
+            <Link href={{ pathname: `/users/${row.id}`, query: { allow_marketing_push: row.allow_marketing_push, is_active: row.is_active } }}>{row.name}</Link>
           </th>
           <td className="py-2 px-4">{row.account_count}</td>
           <td className="py-2 px-4">{row.email}</td>
@@ -157,7 +157,7 @@ const TableBody = (props: ITableBodyProps) => {
           <td className="py-2 px-4">{row.created_at}</td>
           <td className="w-12">
             <Link
-              href={{ pathname: `/users/${row.id}`, query: { ...router.query, state: 'editting' } }}
+              href={{ pathname: `/users/${row.id}`, query: { ...router.query, editting: true } }}
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
             >
               Edit
@@ -165,7 +165,7 @@ const TableBody = (props: ITableBodyProps) => {
           </td>
           <td className="w-12">
             <Link
-              href={{ pathname: router.pathname }}
+              href={{ pathname: router.pathname, query: { ...router.query } }}
               className="font-medium text-red-500 dark:text-red-500 hover:underline"
               passHref
               shallow

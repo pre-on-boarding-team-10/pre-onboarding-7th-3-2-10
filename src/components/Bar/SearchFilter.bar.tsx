@@ -5,7 +5,6 @@ import { ISearchFilterBarProps } from 'src/types/global.type';
 const SearchFilterBar = (props: ISearchFilterBarProps) => {
   const { searchValue, setSearchValue, setCurrentPage } = props;
   const router = useRouter();
-  const isSearchState = router.query.state === 'search' || false;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
@@ -18,7 +17,7 @@ const SearchFilterBar = (props: ISearchFilterBarProps) => {
     setSearchValue({ ...searchValue, submitted: searchValue.changed });
     router.replace({
       pathname: router.pathname,
-      query: { state: 'search', q: searchValue.changed },
+      query: { searching: true, q: searchValue.changed },
     });
     setCurrentPage(1);
   };
@@ -31,6 +30,8 @@ const SearchFilterBar = (props: ISearchFilterBarProps) => {
     setCurrentPage(1);
     setSearchValue({ ...searchValue, submitted: '' });
   };
+
+  const isSearching = router.query.searching || false;
 
   return (
     <div className="pb-4">
@@ -53,7 +54,7 @@ const SearchFilterBar = (props: ISearchFilterBarProps) => {
         >
           검색
         </button>
-        {isSearchState && (
+        {isSearching && (
           <button
             type="button"
             className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"

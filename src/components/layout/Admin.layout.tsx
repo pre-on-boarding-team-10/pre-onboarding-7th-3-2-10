@@ -6,7 +6,7 @@ const AdminRootLayout = ({ children }: IChildren) => {
 };
 
 const AdminMainLayout = ({ children }: IChildren) => {
-  return <main className="w-full bg-gray-100 pl-[168.52px] overflow-y-auto">{children}</main>;
+  return <main className="w-full bg-gray-100 ml-[168.52px] overflow-y-auto">{children}</main>;
 };
 
 const AdminContentLayout = ({ children }: IChildren) => {

@@ -3,10 +3,10 @@ import { useQuery } from 'react-query';
 import { UserService } from 'src/service/UserService';
 import { IAccount } from 'src/types/global.type';
 
-const useGetAccounts = (accessToken: string) => {
+const useGetAccounts = (accessToken: string, id?: number) => {
   const userService = new UserService(accessToken);
 
-  return useQuery<IAccount[], AxiosError>({ queryKey: ['users', 'accounts'], queryFn: () => userService.getAccounts(), enabled: !!accessToken });
+  return useQuery<IAccount[], AxiosError>({ queryKey: ['users', 'accounts', id], queryFn: () => userService.getAccounts(id), enabled: !!accessToken });
 };
 
 export default useGetAccounts;
