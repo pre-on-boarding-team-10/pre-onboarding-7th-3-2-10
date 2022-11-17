@@ -10,7 +10,7 @@ const UserDetailView = () => {
   const router = useRouter();
   const accessToken = useGetAccessToken();
   const { data: user } = useGetUser(accessToken, router.query.id as string);
-  console.log('data', user);
+
   return (
     <AdminRootLayout>
       <SideNav />
