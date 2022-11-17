@@ -8,8 +8,6 @@ interface IPaginationBarProps {
   isPreviousData: boolean;
 }
 
-const MAX_PAGE = 11;
-
 const PaginationBar = (props: IPaginationBarProps) => {
   const { currentPage, setCurrentPage, isPreviousData } = props;
   const router = useRouter();
@@ -42,7 +40,7 @@ const PaginationBar = (props: IPaginationBarProps) => {
             page: currentPage + 1,
           },
         }}
-        className={`next_pagination_btn ${(isPreviousData || currentPage >= MAX_PAGE) && 'opacity-60 pointer-events-none'}`}
+        className={`next_pagination_btn ${isPreviousData && 'opacity-60 pointer-events-none'}`}
         onClick={() => setCurrentPage((prev) => prev + 1)}
         passHref
         shallow
