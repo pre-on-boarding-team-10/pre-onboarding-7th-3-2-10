@@ -23,6 +23,14 @@ export class UserService extends AxiosBaseService {
     });
   }
 
+  async getUser(id: string) {
+    const response = await this.api({
+      method: 'get',
+      url: `/users/${id}`,
+    });
+    return response.data;
+  }
+
   async getUserSetting() {
     return await this.api({
       method: 'get',

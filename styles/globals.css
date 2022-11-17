@@ -12,3 +12,17 @@ body > div {
 body {
   overflow: hidden;
 }
+
+@layer components {
+  .table-cell_exist_border {
+    @apply border-r-[1px] text-center h-full p-2;
+  }
+
+  .table-cell_none_border {
+    @apply text-center h-full p-2;
+  }
+
+  .table-main-cell_p {
+    @apply p-2;
+  }
+}

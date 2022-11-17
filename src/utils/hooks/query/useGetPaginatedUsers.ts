@@ -31,13 +31,15 @@ const useGetPaginatedUsers = (page: number, accessToken: string) => {
   const prefetchNextPage = async () => await queryClient.prefetchQuery(['users', page + 1], () => userService.getPaginatedUsers(page + 1));
 
   return useQuery<AxiosResponse<IUser[]>, AxiosError, IProcessedData>(['users', page], () => userService.getPaginatedUsers(page), {
-    enabled: !!accessToken,
+    enabled: !!accessToken && !!page,
+    staleTime: 1000 * 60 * 3,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     keepPreviousData: true,
     select: (response) => {
       const original = response.data;
-      prefetchNextPage();
       const nextPageData = queryClient.getQueryData<AxiosResponse<IUser[]>>(['users', page + 1]);
-
+      prefetchNextPage();
       return {
         data: original,
         hasNextPage: nextPageData?.data.length !== 0,

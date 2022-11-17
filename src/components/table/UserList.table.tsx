@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import useGetAccounts from 'src/utils/hooks/query/useGetAccounts';
-import useGetUsers, { IUser } from 'src/utils/hooks/query/useGetPaginatedUsers';
+import useGetPaginatedUsers, { IUser } from 'src/utils/hooks/query/useGetPaginatedUsers';
 import useGetUserSetting from 'src/utils/hooks/query/useGetUserSetting';
 import useGetAccessToken from 'src/utils/hooks/useGetAccessToken';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface ITableData extends IUser {
   allow_marketing_push: boolean;
@@ -13,10 +15,12 @@ interface ITableData extends IUser {
 }
 
 const UserListTable = () => {
-  const [pageState, setPageState] = useState<number>(1);
+  const router = useRouter();
+  const query = router.query;
+  const [pageState, setPageState] = useState<number>(query.page ? Number(query.page) : 1);
   const accessToken = useGetAccessToken();
 
-  const { data: paginatedUsers, isPreviousData } = useGetUsers(pageState, accessToken);
+  const { data: paginatedUsers, isPreviousData } = useGetPaginatedUsers(pageState, accessToken);
   const { data: userSetting } = useGetUserSetting(accessToken);
   const { data: accounts } = useGetAccounts(accessToken);
 
@@ -46,49 +50,73 @@ const UserListTable = () => {
   return (
     <article className="flex flex-col gap-4">
       <section className="border border-gray-300 min-h-[353.86px]">
-        <header className="grid grid-cols-10 text-xs font-bold">
-          <h1>고객명</h1>
-          <h1>보유중인 계좌수</h1>
-          <h1>이메일 주소</h1>
-          <h1>주민등록상 성별 코드</h1>
-          <h1>생년월일</h1>
-          <h1>휴대폰 번호</h1>
-          <h1>최근 로그인</h1>
-          <h1>혜택 수신 동의 여부</h1>
-          <h1>활성화 여부</h1>
-          <h1>가입일</h1>
+        <header className="grid grid-cols-10 items-center text-xs  font-medium bg-gray-50 border-b-[1px]">
+          <h1 className="table-cell_exist_border">고객명</h1>
+          <h1 className="table-cell_exist_border">보유중인 계좌수</h1>
+          <h1 className="table-cell_exist_border">이메일 주소</h1>
+          <h1 className="table-cell_exist_border">주민등록상 성별 코드</h1>
+          <h1 className="table-cell_exist_border">생년월일</h1>
+          <h1 className="table-cell_exist_border">휴대폰 번호</h1>
+          <h1 className="table-cell_exist_border">최근 로그인</h1>
+          <h1 className="table-cell_exist_border">혜택 수신 동의 여부</h1>
+          <h1 className="table-cell_exist_border">활성화 여부</h1>
+          <h1 className="table-cell_none_border">가입일</h1>
         </header>
-        <section className="grid grid-cols-10 text-xs">
+        <section className="grid grid-cols-10 text-xs bg-white">
           {tableData.map((data) => {
             return (
               <React.Fragment key={data.id}>
-                <div>{data.name}</div>
-                <div>{data.account_count}</div>
-                <div>{data.email}</div>
-                <div>{data.gender_origin}</div>
-                <div>{data.birth_date}</div>
-                <div>{data.phone_number}</div>
-                <div>{data.last_login}</div>
-                <div>{data.allow_marketing_push}</div>
-                <div>{data.is_active}</div>
-                <div>{data.created_at}</div>
+                <div className="p-2">
+                  <Link href={`/users/${data.id}`}>{data.name}</Link>
+                </div>
+                <div className="table-main-cell_p">{data.account_count}</div>
+                <div className="table-main-cell_p">{data.email}</div>
+                <div className="table-main-cell_p">{data.gender_origin}</div>
+                <div className="table-main-cell_p">{data.birth_date}</div>
+                <div className="table-main-cell_p">{data.phone_number}</div>
+                <div className="table-main-cell_p">{data.last_login}</div>
+                <div className="table-main-cell_p">{data.allow_marketing_push}</div>
+                <div className="table-main-cell_p">{data.is_active}</div>
+                <div className="table-main-cell_p">{data.created_at}</div>
               </React.Fragment>
             );
           })}
         </section>
       </section>
       <div className="flex gap-4 justify-center">
-        <button className="text-sm disabled:opacity-30" onClick={() => setPageState((prev) => Math.max(prev - 1, 0))} disabled={pageState === 1}>
+        <Link
+          href={{
+            pathname: router.pathname,
+            query: {
+              ...query,
+              page: Math.max(pageState - 1, 0),
+            },
+          }}
+          className={`text-sm ${pageState === 1 && 'disabled:opacity-30'}`}
+          onClick={() => setPageState((prev) => Math.max(prev - 1, 0))}
+          passHref
+          shallow
+          replace
+        >
           {`<`}
-        </button>
+        </Link>
         <span className="text-sm">{pageState}</span>
-        <button
-          className="text-sm disabled:opacity-30"
+        <Link
+          href={{
+            pathname: router.pathname,
+            query: {
+              ...query,
+              page: pageState + 1,
+            },
+          }}
+          className={`text-sm ${(isPreviousData || !paginatedUsers?.hasNextPage) && 'disabled:opacity-30'}`}
           onClick={() => setPageState((prev) => prev + 1)}
-          disabled={isPreviousData || !paginatedUsers?.hasNextPage}
+          passHref
+          shallow
+          replace
         >
           {`>`}
-        </button>
+        </Link>
       </div>
     </article>
   );
