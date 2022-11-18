@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { ILogin } from 'src/types/global.type';
 import useCreateUser from 'src/utils/hooks/query/useCreateUser';
-import useLogin from 'src/utils/hooks/query/useLogin';
 import useGetAccessToken from 'src/utils/hooks/useGetAccessToken';
 
 interface IUserFormProps {

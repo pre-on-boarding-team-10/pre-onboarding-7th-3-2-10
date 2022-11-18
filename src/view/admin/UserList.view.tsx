@@ -11,24 +11,14 @@ const UserList = () => {
   const query = router.query;
   const [currentPage, setCurrentPage] = useState<number>(query.page ? Number(query.page) : 1);
 
-  const props = {
-    userListTable: {
-      currentPage,
-      setCurrentPage,
-    },
-    userForm: {
-      currentPage,
-    },
-  };
   return (
     <AdminRootLayout>
       <SideNav />
       <AdminMainLayout>
         <MainHeader />
         <AdminContentLayout>
-          {/* // 사용자 추가 양식 */}
-          <UserForm {...props.userForm} />
-          <UserListTable {...props.userListTable} />
+          <UserForm currentPage={currentPage} />
+          <UserListTable currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </AdminContentLayout>
       </AdminMainLayout>
     </AdminRootLayout>
