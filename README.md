@@ -62,9 +62,13 @@ NEXT_PUBLIC_BACK_BASE_URL = http://localhost:4000
  npm run dev
 ```
 
+- 현재 배포 환경에서는 에러가 나서 로컬 서버를 켜는 과정이 필요합니다.
+
 ### 테스트 계정
 
 ```
+회원가입 버튼 클릭 시 아래 정보로 계정이 생성됩니다.
+
 email : test@test.com
 password: test11!
 
@@ -225,6 +229,9 @@ https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/b12fba
 - query parameter가 set 되도록하여 뒤로 가거나 앞으로 이동했다가 다시 돌아와도 정상적으로 이전의 결과값이 반영되도록 조치함.
 
 <br/>
-### 📝 Meeting Log
 
-[회의록 바로가기](https://www.notion.so/Meeting-log-3eff6566fd844052b7a98702ebab8c5b?p=81f9a3e5723443ce8d357e35d40a17ee&pm=s)
+### 🎥 영상
+
+<img src='https://im4.ezgif.com/tmp/ezgif-4-1e9a0a7e8a.gif' />
+
+<br />

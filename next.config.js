@@ -16,8 +16,8 @@ const nextConfig = {
         destination: `${process.env.NEXT_PUBLIC_FRONT_BASE_URL}/api/:path*`,
       },
       {
-        source: '/login',
-        destination: `${process.env.NEXT_PUBLIC_BACK_BASE_URL}/login`,
+        source: '/:path*',
+        destination: `${process.env.NEXT_PUBLIC_BACK_BASE_URL}/:path*`,
       },
       {
         source: '/users/:path*',
