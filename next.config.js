@@ -5,6 +5,9 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  env: {
+    NEXT_PUBLIC_API_BASEURL: process.env.NEXT_PUBLIC_API_BASEURL,
+  },
 };
 
 module.exports = nextConfig;
