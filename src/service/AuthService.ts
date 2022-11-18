@@ -19,11 +19,15 @@ export class AuthService extends AxiosBaseService {
   }
 
   loginAtJSONServer(data: ILogin) {
-    return this.api({
-      method: 'post',
-      url: '/login',
-      data,
-    });
+    try {
+      return this.api({
+        method: 'post',
+        url: '/login',
+        data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   loginAtNextServer(data: ILogin) {

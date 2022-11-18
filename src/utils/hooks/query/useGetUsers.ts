@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
 import { UserService } from 'src/service/UserService';
 import { IUser } from 'src/types/global.type';
