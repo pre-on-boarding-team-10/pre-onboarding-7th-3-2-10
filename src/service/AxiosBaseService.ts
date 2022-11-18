@@ -21,6 +21,8 @@ export abstract class AxiosBaseService {
   };
 
   private handleRequest = (config: AxiosRequestConfig) => {
+    if (!this.token) return config;
+
     if (!config.headers) config.headers = {};
     config.headers['Authorization'] = `Bearer ${this.token}`;
     return config;
