@@ -7,7 +7,7 @@ export abstract class AxiosBaseService {
 
   public constructor(token?: string) {
     this.api = axios.create({
-      baseURL: 'https://pre-onboarding-7th-3-2-10.vercel.app/',
+      baseURL: '',
     });
     this.token = token;
     this.initializeRequestInterceptor();
