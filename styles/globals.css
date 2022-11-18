@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+body > div {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
+
+@layer components {
+  .table-cell_exist_border {
+    @apply border-r-[1px] text-center h-full p-2;
+  }
+
+  .table-cell_none_border {
+    @apply text-center h-full p-2;
+  }
+
+  .table-main-cell_p {
+    @apply p-2;
+  }
+
+  .title-main {
+    @apply font-bold text-lg;
+  }
+
+  .table-align_center {
+    @apply flex justify-center items-center;
+  }
+
+  .prev_pagination_btn {
+    @apply px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white;
+  }
+
+  .next_pagination_btn {
+    @apply px-4 py-2 text-sm font-medium text-white bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white;
+  }
+
+  .num_pagination_btn {
+    @apply px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 cursor-default;
+  }
+
+  .dark_table_tr {
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700;
+  }
+
+  .dark_table_narrow_th {
+    @apply p-3 font-medium text-gray-900 whitespace-nowrap dark:text-white;
+  }
+
+  .dark_table_wide_th {
+    @apply p-8 font-medium text-gray-900 dark:bg-gray-700 whitespace-nowrap dark:text-white;
+  }
+}
