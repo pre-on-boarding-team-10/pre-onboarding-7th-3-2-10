@@ -15,6 +15,10 @@ const nextConfig = {
         destination: `http://localhost:3000/api/:path*`,
       },
       {
+        source: '/login',
+        destination: `http://localhost:4000/login`,
+      },
+      {
         source: '/users/:path*',
         destination: `http://localhost:4000/users/:path*`,
       },

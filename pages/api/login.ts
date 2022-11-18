@@ -7,7 +7,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const response = await authService.loginAtJSONServer({ email: req.body.email, password: req.body.password });
-
     if (response) {
       res.setHeader(
         'Set-Cookie',
@@ -26,6 +25,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } catch (err) {
     res.status(400);
-    console.error(err);
+    console.error('error!!', err);
   }
 };
