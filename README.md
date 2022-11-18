@@ -56,14 +56,7 @@ NEXT_PUBLIC_FRONT_BASE_URL = http://localhost:3000
 NEXT_PUBLIC_BACK_BASE_URL = http://localhost:4000
 ```
 
-- .env.production
-
-```
-NEXT_PUBLIC_FRONT_BASE_URL = https://pre-onboarding-7th-3-2-10.vercel.app
-NEXT_PUBLIC_BACK_BASE_URL = https://front-server-7th-3-2.herokuapp.com
-```
-
-2.  프로젝트를 실행합니다.
+3.  프로젝트를 실행합니다.
 
 ```
  npm run dev

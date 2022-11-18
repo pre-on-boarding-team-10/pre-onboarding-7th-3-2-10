@@ -30,14 +30,10 @@ const LoginForm = () => {
         <form className="flex flex-col gap-8 px-6 py-4" method="post" onSubmit={onSubmitLoginForm}>
           <input className="border w-full px-4 py-2" type="text" name="email" placeholder="이메일을 입력하세요" onChange={onChange} />
           <input className="border w-full px-4 py-2" type="password" name="password" placeholder="비밀번호를 입력하세요" onChange={onChange} />
-          <div className="flex gap-2">
-            <button className="border py-2 disabled:bg-gray-50 disabled:text-gray-400 w-full" type="submit">
-              로그인
-            </button>
-            <button className="border py-2 disabled:bg-gray-50 disabled:text-gray-400 w-full" type="button" onClick={() => register()}>
-              회원가입
-            </button>
-          </div>
+
+          <button className="border py-2 disabled:bg-gray-50 disabled:text-gray-400 w-full" type="submit">
+            로그인
+          </button>
         </form>
       </div>
     </section>
