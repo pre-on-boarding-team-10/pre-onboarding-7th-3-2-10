@@ -8,7 +8,7 @@ export class AuthService extends AxiosBaseService {
   }
 
   register() {
-    return this.api({
+    return axios({
       method: 'post',
       url: '/users/signup',
       data: {
