@@ -11,8 +11,16 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:path*',
+        source: '/users/:path*',
         destination: 'https://front-server-3-2-10.herokuapp.com/:path*',
+      },
+      {
+        source: '/login',
+        destination: 'https://front-server-3-2-10.herokuapp.com/:path*',
+      },
+      {
+        source: '/api/:path*',
+        destination: 'https://pre-onboarding-7th-3-2-10.vercel.app/:path*',
       },
     ];
   },
