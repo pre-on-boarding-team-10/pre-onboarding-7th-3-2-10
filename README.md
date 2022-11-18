@@ -188,25 +188,41 @@ password: test11!
 
 #### 1. 로그인 처리 (cookie)
 
-https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/66394f0cac55ae58e479198949f025f677f590a2/pages/api/login.ts#L5-L30
+https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/b12fbaeae0b57032bdf7a1c9b6cb34a8ed94effe/pages/api/login.ts#L5-L30
+
+- 서버에서 accessToken을 저장하고 접근하기 위해 next server에 api를 생성하여 쿠키를 set하도록 함
 
 <br/>
 
 #### 2. 페이지네이션
 
-https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/66394f0cac55ae58e479198949f025f677f590a2/src/service/UserService.ts#L41-L52
+https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/b12fbaeae0b57032bdf7a1c9b6cb34a8ed94effe/src/components/Bar/Pagination.bar.tsx#L5-L53
+
+- currentPage 라는 상태를 만들어 이전, 다음 버튼을 클릭할 경우 숫자가 변동되도록 제어함
+
+https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/b12fbaeae0b57032bdf7a1c9b6cb34a8ed94effe/src/components/table/UserList.table.tsx#L115-L184
+
+- currentPage가 변할 때마다 query data를 호출한다.
 
 <br/>
 
 #### 3. 보유계좌
 
-https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/66394f0cac55ae58e479198949f025f677f590a2/src/service/UserService.ts#L74-L84
+https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/b12fbaeae0b57032bdf7a1c9b6cb34a8ed94effe/src/components/table/UserHoldingAccount.table.tsx#L10-L56
+
+- 상세 페이지에서 사용자가 보유하고 있는 계좌를 테이블로 보여줌
 
 <br/>
 
 #### 4. 리스트 검색
 
-https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/66394f0cac55ae58e479198949f025f677f590a2/src/components/Bar/SearchFilter.bar.tsx#L15-L23
+https://github.com/pre-on-boarding-team-10/pre-onboarding-7th-3-2-10/blob/b12fbaeae0b57032bdf7a1c9b6cb34a8ed94effe/src/components/Bar/SearchFilter.bar.tsx#L5-L69
+
+- 검색을 누르면 set 된 쿼리로 API를 호출하여 결과값을 보여준다.
+
+#### 5. 지속적으로 유지되는 상태 관리
+
+- query parameter가 set 되도록하여 뒤로 가거나 앞으로 이동했다가 다시 돌아와도 정상적으로 이전의 결과값이 반영되도록 조치함.
 
 <br/>
 ### 📝 Meeting Log
