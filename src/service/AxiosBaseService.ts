@@ -4,13 +4,9 @@ import { AuthService } from './AuthService';
 export abstract class AxiosBaseService {
   api: AxiosInstance;
   protected token?: string;
-  protected readonly baseURL: string;
 
-  public constructor(baseURL: string, token?: string) {
-    this.baseURL = baseURL;
-    this.api = axios.create({
-      baseURL: this.baseURL,
-    });
+  public constructor(token?: string) {
+    this.api = axios.create();
     this.token = token;
     this.initializeRequestInterceptor();
     this.initializeResponseInterceptor();
