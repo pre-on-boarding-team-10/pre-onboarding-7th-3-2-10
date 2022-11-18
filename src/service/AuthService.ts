@@ -4,7 +4,7 @@ import { AxiosBaseService } from './AxiosBaseService';
 
 export class AuthService extends AxiosBaseService {
   constructor() {
-    super(process.env.NEXT_PUBLIC_API_BASE_URL);
+    super();
   }
 
   register() {
@@ -27,7 +27,7 @@ export class AuthService extends AxiosBaseService {
   }
 
   loginAtNextServer(data: ILogin) {
-    return axios({
+    return this.api({
       method: 'post',
       url: '/api/login',
       data,
@@ -35,7 +35,7 @@ export class AuthService extends AxiosBaseService {
   }
 
   logoutAtNextServer() {
-    return axios({
+    return this.api({
       method: 'post',
       url: '/api/logout',
     });
