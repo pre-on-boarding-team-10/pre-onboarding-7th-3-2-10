@@ -4,7 +4,7 @@ import { AxiosBaseService } from './AxiosBaseService';
 
 export class AuthService extends AxiosBaseService {
   constructor() {
-    super(process.env.NEXT_PUBLIC_API_BASE_URL);
+    super(process.env.NEXT_PUBLIC_FRONT_BASE_URL);
   }
 
   register() {

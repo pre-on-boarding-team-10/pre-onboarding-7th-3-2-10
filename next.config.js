@@ -6,29 +6,30 @@ const nextConfig = {
     optimizeCss: true,
   },
   env: {
-    NEXT_PUBLIC_API_BASEURL: process.env.NEXT_PUBLIC_API_BASEURL,
+    NEXT_PUBLIC_FRONT_BASE_URL: process.env.NEXT_PUBLIC_FRONT_BASE_URL,
+    NEXT_PUBLIC_BACK_BASE_URL: process.env.NEXT_PUBLIC_BACK_BASE_URL,
   },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: `http://localhost:3000/api/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_FRONT_BASE_URL}/api/:path*`,
       },
       {
         source: '/login',
-        destination: `http://localhost:4000/login`,
+        destination: `${process.env.NEXT_PUBLIC_BACK_BASE_URL}/login`,
       },
       {
         source: '/users/:path*',
-        destination: `http://localhost:4000/users/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_BACK_BASE_URL}/users/:path*`,
       },
       {
         source: '/userSetting',
-        destination: `http://localhost:4000/userSetting`,
+        destination: `${process.env.NEXT_PUBLIC_BACK_BASE_URL}/userSetting`,
       },
       {
         source: '/accounts',
-        destination: `http://localhost:4000/accounts`,
+        destination: `${process.env.NEXT_PUBLIC_BACK_BASE_URL}/accounts`,
       },
     ];
   },
