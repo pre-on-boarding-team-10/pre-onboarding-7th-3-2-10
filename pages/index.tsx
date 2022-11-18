@@ -19,7 +19,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     return {
       redirect: {
         permanent: false,
-        destination: '/users',
+        destination: '/user-list',
       },
     };
 

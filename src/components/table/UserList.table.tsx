@@ -40,7 +40,7 @@ const UserListTable = (props: IUserListTableProps) => {
   const { data: paginatedUsers, isPreviousData } = useGetPaginatedUsers(currentPage, accessToken, searchValue.submitted);
   const { data: userSetting } = useGetUserSetting(accessToken);
   const { data: accounts } = useGetAccounts(accessToken);
-
+  console.log('paginatedUsers', paginatedUsers);
   const { mutate: deleteUser } = useDeleteUser(accessToken, currentPage);
 
   if (!paginatedUsers || !userSetting || !accounts) return <></>;
@@ -120,7 +120,7 @@ const TableBody = (props: ITableBodyProps) => {
 
   useEffect(() => {
     if (paginatedUsers && userSetting && accounts) {
-      const reduced = paginatedUsers.reduce((arr, cur) => {
+      const reduced = paginatedUsers?.reduce((arr, cur) => {
         const mySetting = userSetting.find((setting) => setting.uuid === cur.uuid);
         const myAccounts = accounts.filter((account) => account.uuid === cur.uuid);
 
@@ -144,7 +144,9 @@ const TableBody = (props: ITableBodyProps) => {
       {tableRowsData.map((row, rowIdx) => (
         <tr key={`${row.id}-${rowIdx}`} className="dark_table_tr">
           <th scope="row" className="dark_table_narrow_th">
-            <Link href={{ pathname: `/users/${row.id}`, query: { allow_marketing_push: row.allow_marketing_push, is_active: row.is_active } }}>{row.name}</Link>
+            <Link href={{ pathname: `/user-list/${row.id}`, query: { allow_marketing_push: row.allow_marketing_push, is_active: row.is_active } }}>
+              {row.name}
+            </Link>
           </th>
           <td className="py-2 px-4">{row.account_count}</td>
           <td className="py-2 px-4">{row.email}</td>
@@ -157,7 +159,7 @@ const TableBody = (props: ITableBodyProps) => {
           <td className="py-2 px-4">{row.created_at}</td>
           <td className="w-12">
             <Link
-              href={{ pathname: `/users/${row.id}`, query: { ...router.query, editting: true } }}
+              href={{ pathname: `/user-list/${row.id}`, query: { ...router.query, editting: true } }}
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
             >
               Edit
