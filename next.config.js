@@ -16,7 +16,7 @@ const nextConfig = {
       },
       {
         source: '/login',
-        destination: 'https://front-server-3-2-10.herokuapp.com/:path*',
+        destination: 'https://front-server-3-2-10.herokuapp.com/login',
       },
       {
         source: '/api/:path*',

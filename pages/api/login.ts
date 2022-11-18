@@ -25,6 +25,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(400).json({ failed: true });
     }
   } catch (err) {
-    res.status(400).json({ message: '!!' });
+    res.status(400).json({ err });
   }
 };
