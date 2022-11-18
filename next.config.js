@@ -11,12 +11,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/users/:path*',
-        destination: 'https://front-server-3-2-10.herokuapp.com/users/:path*',
+        source: '/:path*',
+        destination: 'https://front-server-3-2-10.herokuapp.com/:path*',
       },
       {
-        source: '/login',
-        destination: 'https://front-server-3-2-10.herokuapp.com/login',
+        source: '/users/:path*',
+        destination: 'https://front-server-3-2-10.herokuapp.com/users/:path*',
       },
     ];
   },
