@@ -47,10 +47,34 @@
 npm install
 ```
 
+2. 환경변수를 추가합니다.
+
+- .env.development
+
+```
+NEXT_PUBLIC_FRONT_BASE_URL = http://localhost:3000
+NEXT_PUBLIC_BACK_BASE_URL = http://localhost:4000
+```
+
+- .env.production
+
+```
+NEXT_PUBLIC_FRONT_BASE_URL = https://pre-onboarding-7th-3-2-10.vercel.app
+NEXT_PUBLIC_BACK_BASE_URL = https://front-server-7th-3-2.herokuapp.com
+```
+
 2.  프로젝트를 실행합니다.
 
 ```
  npm run dev
+```
+
+### 테스트 계정
+
+```
+email : test@test.com
+password: test11!
+
 ```
 
 <br/>

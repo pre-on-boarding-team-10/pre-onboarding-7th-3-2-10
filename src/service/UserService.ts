@@ -3,7 +3,7 @@ import { AxiosBaseService } from './AxiosBaseService';
 
 export class UserService extends AxiosBaseService {
   constructor(token?: string) {
-    super(token);
+    super(process.env.NEXT_PUBLIC_FRONT_BASE_URL, token);
   }
 
   async createUser(data: ILogin) {

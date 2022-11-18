@@ -14,7 +14,7 @@ const useUpdateUser = (accessToken: string, page: number) => {
       queryClient.invalidateQueries(['users', page]);
       queryClient.invalidateQueries(['users', 'detail', id]);
       router.push({
-        pathname: '/users',
+        pathname: '/user-list',
         query: {
           q: router.query.q || '',
           searching: !!router.query.searching,

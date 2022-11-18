@@ -5,7 +5,7 @@ import { AuthService } from 'src/service/AuthService';
 
 const SideNav = () => {
   const { pathname } = useRouter();
-  const isUserListPage = pathname.split('/')[1] === 'users';
+  const isUserListPage = pathname.split('/')[1] === 'user-list';
   const authService = new AuthService();
 
   return (

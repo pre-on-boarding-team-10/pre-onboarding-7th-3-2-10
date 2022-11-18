@@ -12,7 +12,7 @@ const useLogin = () => {
       return authService.loginAtNextServer(data);
     },
     onSuccess: () => {
-      router.push('/users');
+      router.push('/user-list');
     },
   });
 };
