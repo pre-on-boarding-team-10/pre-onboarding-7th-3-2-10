@@ -12,7 +12,7 @@ const nextConfig = {
     return [
       {
         source: '/users/:path*',
-        destination: 'https://front-server-3-2-10.herokuapp.com/:path*',
+        destination: 'https://front-server-3-2-10.herokuapp.com/users/:path*',
       },
       {
         source: '/login',
@@ -20,7 +20,7 @@ const nextConfig = {
       },
       {
         source: '/api/:path*',
-        destination: 'https://pre-onboarding-7th-3-2-10.vercel.app/:path*',
+        destination: 'https://pre-onboarding-7th-3-2-10.vercel.app/api/:path*',
       },
     ];
   },
