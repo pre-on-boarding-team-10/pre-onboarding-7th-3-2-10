@@ -6,8 +6,9 @@ export abstract class AxiosBaseService {
   protected token?: string;
   protected readonly baseURL: string;
 
-  public constructor(baseURL: string, token?: string) {
-    this.baseURL = baseURL;
+  public constructor(token?: string) {
+    this.baseURL = 'https://pre-onboarding-7th-3-2-10.vercel.app/';
+
     this.api = axios.create({
       baseURL: this.baseURL,
     });
