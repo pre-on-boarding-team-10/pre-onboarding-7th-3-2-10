@@ -23,6 +23,7 @@ export abstract class AxiosBaseService {
 
     if (!config.headers) config.headers = {};
     config.headers['Authorization'] = `Bearer ${this.token}`;
+    config.headers['Access-Control-Allow-Origin'] = '*';
     return config;
   };
 
