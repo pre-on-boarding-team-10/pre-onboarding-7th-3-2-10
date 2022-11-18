@@ -1,11 +1,10 @@
 import { IncomingMessage } from 'http';
 import { NextPageContext } from 'next';
 import React from 'react';
-import Login from 'src/view/Login.view';
+import LoginView from 'src/view/Login.view';
 
 const RootPage = () => {
-  // TODO: serverside나 page 관련 로직은 여기서 처리
-  return <Login />;
+  return <LoginView />;
 };
 
 export default RootPage;
